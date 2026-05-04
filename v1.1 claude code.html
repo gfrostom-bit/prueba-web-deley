@@ -1,0 +1,2990 @@
+<!DOCTYPE html>
+<!-- saved from url=(0048)file:///C:/Users/Ruben/Downloads/deley_v4_1.html -->
+<html lang="es">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Deley Mobiliario — Alta Ingeniería Doméstica</title>
+  <meta name="description"
+    content="Cocinas, baños y vestidores diseñados como arquitectura interior. Fabricación de autor en Alfaro, La Rioja.">
+  <link rel="preconnect" href="https://fonts.googleapis.com/">
+  <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
+  <link href="./v1.1 claude code_files/css2" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #0A0A0A;
+      --ink-2: #141414;
+      --ink-3: #1E1E1E;
+      --bone: #F4F0EA;
+      --muted: #8E8A81;
+      --muted-2: #6A6660;
+      --champagne: #BBAA94;
+      --oxblood: #b89b76;
+      --border: rgba(244, 240, 234, 0.12);
+      --border-mid: rgba(244, 240, 234, 0.22);
+      --ease: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box
+    }
+
+    html {
+      scroll-behavior: smooth
+    }
+
+    body {
+      background: var(--ink);
+      color: var(--bone);
+      font-family: 'Manrope', sans-serif;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale
+    }
+
+    @media (pointer:fine) {
+
+      body,
+      a,
+      button,
+      input,
+      textarea,
+      select,
+      label {
+        cursor: none
+      }
+    }
+
+    ::selection {
+      background: var(--champagne);
+      color: var(--ink)
+    }
+
+    .display {
+      font-family: 'Bodoni Moda', serif
+    }
+
+    .overline {
+      font-size: .7rem;
+      letter-spacing: .32em;
+      text-transform: uppercase;
+      font-weight: 500
+    }
+
+    button {
+      font-family: 'Manrope', sans-serif
+    }
+
+    /* ── SCROLL PROGRESS ── */
+    #scroll-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 2px;
+      background: var(--champagne);
+      z-index: 99999;
+      width: 0%;
+      transition: width .1s linear;
+      pointer-events: none
+    }
+
+    /* ── LOADER ── */
+    #loader {
+      position: fixed;
+      inset: 0;
+      background: var(--ink);
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      transition: transform 1.1s var(--ease)
+    }
+
+    body.loaded #loader {
+      transform: translateY(-100%);
+      pointer-events: none
+    }
+
+    /* Bloquea scroll hasta que cargue */
+    body:not(.loaded) {
+      overflow: hidden
+    }
+
+    #loader .brand {
+      font-family: 'Bodoni Moda', serif;
+      font-weight: 300;
+      font-size: clamp(2rem, 6vw, 4rem);
+      letter-spacing: .5em;
+      opacity: 0;
+      animation: loadIn 1.7s var(--ease) forwards
+    }
+
+    #loader .sub {
+      margin-top: 1rem;
+      color: var(--muted);
+      opacity: 0;
+      animation: loadIn 1.7s .4s var(--ease) forwards
+    }
+
+    #loader .progress-wrap {
+      margin-top: 2.5rem;
+      width: 200px;
+      height: 1px;
+      background: rgba(244, 240, 234, .15);
+      overflow: hidden;
+      opacity: 0;
+      animation: loadIn 1.7s .6s var(--ease) forwards
+    }
+
+    #loader .progress-line {
+      height: 100%;
+      background: var(--champagne);
+      animation: loaderLine 1.6s .8s var(--ease-out) forwards;
+      width: 0%
+    }
+
+    @keyframes loaderLine {
+      to {
+        width: 100%
+      }
+    }
+
+    @keyframes loadIn {
+      0% {
+        opacity: 0;
+        letter-spacing: .2em
+      }
+
+      50% {
+        opacity: 1
+      }
+
+      100% {
+        opacity: 1;
+        letter-spacing: .5em
+      }
+    }
+
+    /* ── CURSOR ── */
+    .cursor-dot {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--bone);
+      pointer-events: none;
+      z-index: 100000;
+      mix-blend-mode: difference;
+      opacity: 0;
+      will-change: transform;
+      transition: opacity .25s ease;
+    }
+
+    .cursor-ring {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: 1px solid rgba(244, 240, 234, .4);
+      pointer-events: none;
+      z-index: 99999;
+      mix-blend-mode: difference;
+      opacity: 0;
+      will-change: transform;
+      /* NO transition on transform — position updates happen via JS directly */
+      transition: width .3s var(--ease), height .3s var(--ease), background .3s, border-color .3s, opacity .25s, border-radius .3s;
+    }
+
+    .cursor-ring.hover {
+      width: 44px;
+      height: 44px;
+      background: rgba(187, 170, 148, .14);
+      border-color: var(--champagne);
+      mix-blend-mode: normal;
+      backdrop-filter: blur(2px);
+    }
+
+    .cursor-dot.visible,
+    .cursor-ring.visible {
+      opacity: 1
+    }
+
+    .cursor-dot.hide {
+      opacity: 0
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 60;
+      padding: 1.4rem clamp(1.25rem, 4vw, 3rem);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: all .5s var(--ease);
+      background: transparent;
+      border-bottom: 1px solid transparent
+    }
+
+    nav.scrolled {
+      background: rgba(10, 10, 10, .7);
+      backdrop-filter: blur(20px);
+      border-bottom-color: var(--border)
+    }
+
+    .logo {
+      font-family: 'Bodoni Moda', serif;
+      font-size: 1.35rem;
+      letter-spacing: .45em;
+      color: var(--bone);
+      background: transparent;
+      border: 0;
+      padding: 0;
+      transition: opacity .3s
+    }
+
+    .logo:hover {
+      opacity: .7
+    }
+
+    .nav-links {
+      display: none;
+      gap: 2.5rem;
+      align-items: center
+    }
+
+    @media (min-width:900px) {
+      .nav-links {
+        display: flex
+      }
+    }
+
+    .nav-links button {
+      background: transparent;
+      border: 0;
+      color: var(--bone);
+      font-size: .68rem;
+      letter-spacing: .28em;
+      text-transform: uppercase;
+      padding: 0;
+      transition: color .4s var(--ease);
+      position: relative
+    }
+
+    .nav-links button::after {
+      content: '';
+      position: absolute;
+      bottom: -3px;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: var(--champagne);
+      transition: width .4s var(--ease)
+    }
+
+    .nav-links button:hover {
+      color: var(--champagne)
+    }
+
+    .nav-links button:hover::after {
+      width: 100%
+    }
+
+    .nav-btns {
+      display: flex;
+      align-items: center;
+      gap: .75rem
+    }
+
+    .btn-nav {
+      border: 1px solid var(--border);
+      color: var(--bone);
+      padding: .6rem 1.1rem;
+      background: transparent;
+      text-decoration: none;
+      font-size: .64rem;
+      letter-spacing: .28em;
+      text-transform: uppercase;
+      transition: all .4s var(--ease)
+    }
+
+    .btn-nav:hover {
+      background: var(--bone);
+      color: var(--ink)
+    }
+
+    #back-btn {
+      display: none;
+      border-color: var(--champagne);
+      color: var(--champagne)
+    }
+
+    #back-btn:hover {
+      background: var(--champagne);
+      color: var(--ink)
+    }
+
+    /* hamburger */
+    .hamburger {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      background: transparent;
+      border: 0;
+      padding: 4px;
+      cursor: pointer
+    }
+
+    .hamburger span {
+      display: block;
+      width: 22px;
+      height: 1px;
+      background: var(--bone);
+      transition: all .4s var(--ease)
+    }
+
+    .hamburger.open span:nth-child(1) {
+      transform: translateY(6px) rotate(45deg)
+    }
+
+    .hamburger.open span:nth-child(2) {
+      opacity: 0
+    }
+
+    .hamburger.open span:nth-child(3) {
+      transform: translateY(-6px) rotate(-45deg)
+    }
+
+    @media (min-width:900px) {
+      .hamburger {
+        display: none
+      }
+    }
+
+    /* mobile menu */
+    #mobile-menu {
+      position: fixed;
+      inset: 0;
+      background: var(--ink);
+      z-index: 50;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2.5rem;
+      transform: translateY(-100%);
+      transition: transform .8s var(--ease)
+    }
+
+    #mobile-menu.open {
+      transform: translateY(0)
+    }
+
+    #mobile-menu button {
+      background: transparent;
+      border: 0;
+      color: var(--bone);
+      font-family: 'Bodoni Moda', serif;
+      font-size: clamp(2.2rem, 8vw, 4rem);
+      font-weight: 300;
+      letter-spacing: .05em;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity .6s, transform .6s, color .3s
+    }
+
+    #mobile-menu.open button {
+      opacity: 1;
+      transform: translateY(0)
+    }
+
+    #mobile-menu.open button:nth-child(1) {
+      transition-delay: .1s
+    }
+
+    #mobile-menu.open button:nth-child(2) {
+      transition-delay: .18s
+    }
+
+    #mobile-menu.open button:nth-child(3) {
+      transition-delay: .26s
+    }
+
+    #mobile-menu.open button:nth-child(4) {
+      transition-delay: .34s
+    }
+
+    #mobile-menu button:hover {
+      color: var(--champagne)
+    }
+
+    #mobile-menu .m-footer {
+      position: absolute;
+      bottom: 2rem;
+      font-size: .7rem;
+      letter-spacing: .28em;
+      text-transform: uppercase;
+      color: var(--muted)
+    }
+
+    /* ── PAGES ── */
+    .page {
+      display: none;
+      animation: fade .7s var(--ease) both
+    }
+
+    .page.active {
+      display: block
+    }
+
+    @keyframes fade {
+      from {
+        opacity: 0;
+        transform: translateY(6px)
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0)
+      }
+    }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      height: 100vh;
+      min-height: 640px;
+      width: 100%;
+      overflow: hidden;
+      display: flex
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      animation: zoomOut 2.4s var(--ease) both;
+      will-change: transform;
+      transform: translateZ(0)
+    }
+
+    @keyframes zoomOut {
+      from {
+        transform: scale(1.1)
+      }
+
+      to {
+        transform: scale(1)
+      }
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(10, 10, 10, .55) 0%, rgba(10, 10, 10, .2) 40%, rgba(10, 10, 10, .88) 100%)
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      max-width: 1500px;
+      margin: 0 auto;
+      padding: 0 clamp(1.25rem, 4vw, 3rem) clamp(3rem, 8vh, 6rem);
+      align-self: flex-end
+    }
+
+    .hero h1 {
+      font-family: 'Bodoni Moda', serif;
+      font-weight: 200;
+      font-size: clamp(2.6rem, 9vw, 8.5rem);
+      line-height: .95;
+      letter-spacing: -.02em;
+      max-width: 16ch;
+      margin: 0
+    }
+
+    .hero h1 em {
+      font-style: italic;
+      color: var(--champagne)
+    }
+
+    .reveal {
+      display: inline-block;
+      overflow: hidden
+    }
+
+    .reveal>span {
+      display: inline-block;
+      transform: translateY(110%);
+      animation: rise 1.1s var(--ease) forwards
+    }
+
+    .reveal.d1>span {
+      animation-delay: 2.0s
+    }
+
+    .reveal.d2>span {
+      animation-delay: 2.25s
+    }
+
+    @keyframes rise {
+      to {
+        transform: translateY(0)
+      }
+    }
+
+    .hero-overline {
+      color: var(--champagne);
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fadeUp 1s 2.2s var(--ease) forwards
+    }
+
+    .hero-row {
+      margin-top: 2.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      flex-wrap: wrap;
+      gap: 2rem;
+      opacity: 0;
+      animation: fadeUp 1s 2.6s var(--ease) forwards
+    }
+
+    .hero-row p {
+      max-width: 480px;
+      color: var(--bone);
+      opacity: .75;
+      font-size: clamp(.95rem, 1.1vw, 1.05rem);
+      line-height: 1.7;
+      font-weight: 300
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px)
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0)
+      }
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 1px solid rgba(244, 240, 234, .5);
+      color: var(--bone);
+      padding: 1rem 2rem;
+      font-size: .7rem;
+      letter-spacing: .32em;
+      text-transform: uppercase;
+      transition: all .5s var(--ease)
+    }
+
+    .btn-outline:hover {
+      background: var(--bone);
+      color: var(--ink)
+    }
+
+    .mouse-cue {
+      position: absolute;
+      bottom: 2.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 3;
+      opacity: .6;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: .5rem;
+      color: var(--bone);
+      font-size: .6rem;
+      letter-spacing: .4em;
+      text-transform: uppercase
+    }
+
+    .mouse-icon {
+      width: 22px;
+      height: 36px;
+      border: 1.5px solid rgba(244, 240, 234, .6);
+      border-radius: 12px;
+      position: relative
+    }
+
+    .mouse-wheel {
+      width: 3px;
+      height: 7px;
+      background: var(--bone);
+      border-radius: 2px;
+      position: absolute;
+      top: 6px;
+      left: 50%;
+      transform: translateX(-50%);
+      animation: scrollWheel 1.6s ease-out infinite
+    }
+
+    @keyframes scrollWheel {
+      0% {
+        opacity: 1;
+        top: 6px
+      }
+
+      100% {
+        opacity: 0;
+        top: 18px
+      }
+    }
+
+    /* ── PORTALS ── */
+    .portals {
+      padding: clamp(6rem, 12vw, 12rem) 0 clamp(4rem, 8vw, 8rem)
+    }
+
+    .container {
+      max-width: 1500px;
+      margin: 0 auto;
+      padding: 0 clamp(1.25rem, 4vw, 3rem)
+    }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: clamp(3rem, 6vw, 6rem);
+      flex-wrap: wrap;
+      gap: 2rem
+    }
+
+    .section-head h2 {
+      font-family: 'Bodoni Moda', serif;
+      font-size: clamp(2.2rem, 5vw, 4.6rem);
+      line-height: 1;
+      font-weight: 300;
+      color: var(--bone);
+      letter-spacing: -.02em;
+      max-width: 16ch
+    }
+
+    .section-head h2 em {
+      color: var(--champagne)
+    }
+
+    .section-head p {
+      max-width: 360px;
+      color: var(--muted);
+      font-size: .95rem;
+      line-height: 1.7
+    }
+
+    .portal-row {
+      position: relative;
+      background: transparent;
+      border: 0;
+      border-top: 1px solid var(--border);
+      padding: clamp(2rem, 4vw, 3.2rem) 0;
+      text-align: left;
+      color: var(--bone);
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: clamp(1rem, 4vw, 4rem);
+      align-items: center;
+      width: 100%;
+      overflow: hidden;
+      transition: padding .4s var(--ease)
+    }
+
+    .portal-row:hover {
+      padding-left: 1rem
+    }
+
+    .portal-row:last-child {
+      border-bottom: 1px solid var(--border)
+    }
+
+    .portal-row .num {
+      font-family: 'Bodoni Moda', serif;
+      font-style: italic;
+      font-size: 1rem;
+      opacity: .45;
+      min-width: 3rem
+    }
+
+    .portal-row h3 {
+      font-family: 'Bodoni Moda', serif;
+      font-size: clamp(2.4rem, 6vw, 6rem);
+      font-weight: 300;
+      line-height: 1;
+      letter-spacing: -.02em;
+      transition: color .4s var(--ease)
+    }
+
+    .portal-row:hover h3 {
+      color: var(--champagne)
+    }
+
+    .portal-row .sub {
+      margin-top: .6rem;
+      color: var(--muted);
+      font-size: .75rem;
+      letter-spacing: .22em;
+      text-transform: uppercase
+    }
+
+    .portal-row .preview {
+      width: clamp(180px, 22vw, 320px);
+      height: clamp(120px, 14vw, 200px);
+      background-size: cover;
+      background-position: center;
+      opacity: 0;
+      transform: translateX(30px) scale(.96);
+      transition: .7s var(--ease)
+    }
+
+    .portal-row:hover .preview {
+      opacity: 1;
+      transform: translateX(0) scale(1)
+    }
+
+    @media (max-width:768px) {
+      .portal-row .preview {
+        display: none
+      }
+    }
+
+    /* ── PROCESO ── */
+    .proceso {
+      padding: clamp(6rem, 12vw, 12rem) 0;
+      background: var(--ink-2);
+      position: relative;
+      overflow: hidden
+    }
+
+    .proceso::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--champagne), transparent);
+      opacity: .3
+    }
+
+    .proceso-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 0;
+      margin-top: clamp(3rem, 6vw, 5rem)
+    }
+
+    .proceso-step {
+      padding: clamp(2rem, 4vw, 3.5rem);
+      border-right: 1px solid var(--border);
+      position: relative;
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity .9s var(--ease), transform .9s var(--ease)
+    }
+
+    .proceso-step.visible {
+      opacity: 1;
+      transform: translateY(0)
+    }
+
+    .proceso-step:nth-child(1) {
+      transition-delay: 0s
+    }
+
+    .proceso-step:nth-child(2) {
+      transition-delay: .12s
+    }
+
+    .proceso-step:nth-child(3) {
+      transition-delay: .24s
+    }
+
+    .proceso-step:nth-child(4) {
+      transition-delay: .36s
+    }
+
+    .proceso-step:last-child {
+      border-right: 0
+    }
+
+    @media (max-width:900px) {
+      .proceso-step {
+        border-right: 0;
+        border-bottom: 1px solid var(--border)
+      }
+
+      .proceso-step:last-child {
+        border-bottom: 0
+      }
+    }
+
+    .proceso-step .step-n {
+      font-family: 'Bodoni Moda', serif;
+      font-style: italic;
+      font-size: 4rem;
+      color: rgba(187, 170, 148, .12);
+      line-height: 1;
+      margin-bottom: 1.5rem;
+      transition: color .4s
+    }
+
+    .proceso-step:hover .step-n {
+      color: rgba(187, 170, 148, .22)
+    }
+
+    .proceso-step h3 {
+      font-family: 'Bodoni Moda', serif;
+      font-size: 1.7rem;
+      font-weight: 300;
+      color: var(--bone);
+      margin-bottom: 1rem
+    }
+
+    .proceso-step p {
+      color: var(--muted);
+      font-size: .9rem;
+      line-height: 1.75
+    }
+
+    .proceso-step .tag {
+      display: inline-block;
+      margin-top: 1.5rem;
+      font-size: .65rem;
+      letter-spacing: .28em;
+      text-transform: uppercase;
+      color: var(--champagne);
+      border: 1px solid rgba(187, 170, 148, .3);
+      padding: .3rem .7rem
+    }
+
+    /* ── SUBPORTAL / GALLERY GRID ── */
+    .subportal {
+      min-height: 100vh;
+      padding: clamp(7rem, 12vw, 11rem) clamp(1.25rem, 4vw, 3rem) clamp(4rem, 8vw, 8rem)
+    }
+
+    .sub-grid {
+      display: grid;
+      gap: clamp(1rem, 2vw, 2rem)
+    }
+
+    .sub-card {
+      position: relative;
+      aspect-ratio: 3/4;
+      border: 0;
+      padding: 0;
+      overflow: hidden;
+      background: var(--ink-2)
+    }
+
+    .sub-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: brightness(.65);
+      transition: transform 1.4s var(--ease), filter 1.4s var(--ease)
+    }
+
+    .sub-card:hover img {
+      transform: scale(1.05);
+      filter: brightness(.75)
+    }
+
+    .sub-card .overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(10, 10, 10, 0) 30%, rgba(10, 10, 10, .88) 100%)
+    }
+
+    .sub-card .label {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      padding: clamp(1.5rem, 3vw, 2.5rem);
+      text-align: left
+    }
+
+    .sub-card .label .ov {
+      color: var(--champagne);
+      margin-bottom: .5rem;
+      transition: letter-spacing .4s var(--ease)
+    }
+
+    .sub-card:hover .label .ov {
+      letter-spacing: .4em
+    }
+
+    .sub-card .label h3 {
+      font-family: 'Bodoni Moda', serif;
+      font-size: clamp(2rem, 4vw, 3.6rem);
+      color: var(--bone);
+      font-weight: 300;
+      letter-spacing: -.01em
+    }
+
+    /* ── GALLERY ── */
+    .gallery {
+      padding: clamp(7rem, 12vw, 11rem) clamp(1.25rem, 4vw, 3rem) clamp(5rem, 10vw, 9rem)
+    }
+
+    .gallery-head {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(1.5rem, 4vw, 4rem);
+      align-items: end;
+      margin-bottom: clamp(3rem, 8vw, 7rem)
+    }
+
+    @media (max-width:768px) {
+      .gallery-head {
+        grid-template-columns: 1fr
+      }
+    }
+
+    .gallery-head h1 {
+      font-family: 'Bodoni Moda', serif;
+      font-size: clamp(3rem, 9vw, 9rem);
+      font-weight: 200;
+      color: var(--bone);
+      line-height: .92;
+      letter-spacing: -.03em
+    }
+
+    .gallery-head h1 em {
+      color: var(--champagne)
+    }
+
+    .gallery-head p {
+      color: var(--muted);
+      font-size: 1rem;
+      line-height: 1.7;
+      max-width: 460px;
+      justify-self: end
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: clamp(1rem, 2vw, 2rem);
+      row-gap: clamp(4rem, 8vw, 8rem)
+    }
+
+    @media (max-width:768px) {
+      .gallery-grid>figure {
+        grid-column: 1 / -1 !important;
+        margin-top: 0 !important
+      }
+    }
+
+    .gallery-grid figure {
+      margin: 0;
+      opacity: 0;
+      transform: translateY(60px);
+      transition: opacity 1s var(--ease), transform 1s var(--ease)
+    }
+
+    .gallery-grid figure.visible {
+      opacity: 1;
+      transform: translateY(0)
+    }
+
+    .img-wrap {
+      width: 100%;
+      background: var(--ink-2);
+      overflow: hidden;
+      position: relative
+    }
+
+    .img-wrap::after {
+      content: '⊕ Ver';
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(10, 10, 10, .45);
+      color: var(--bone);
+      font-size: .7rem;
+      letter-spacing: .32em;
+      text-transform: uppercase;
+      opacity: 0;
+      transition: opacity .4s var(--ease)
+    }
+
+    .img-wrap:hover::after {
+      opacity: 1
+    }
+
+    .img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 1.4s var(--ease)
+    }
+
+    .img-wrap:hover img {
+      transform: scale(1.04)
+    }
+
+    .caption {
+      margin-top: 1.5rem;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 1.5rem;
+      align-items: start
+    }
+
+    .caption .num {
+      font-family: 'Bodoni Moda', serif;
+      font-style: italic;
+      color: var(--champagne);
+      padding-top: 4px
+    }
+
+    .caption h3 {
+      font-family: 'Bodoni Moda', serif;
+      font-size: clamp(1.4rem, 2vw, 2rem);
+      font-weight: 400;
+      color: var(--bone);
+      margin-bottom: .5rem
+    }
+
+    .caption p {
+      color: var(--muted);
+      font-size: .9rem;
+      line-height: 1.7;
+      max-width: 420px
+    }
+
+    /* ── PROJECT DETAIL ── */
+    #page-project-detail .project-hero {
+      position: relative;
+      height: 75vh;
+      overflow: hidden
+    }
+
+    #page-project-detail .project-hero img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: brightness(.65)
+    }
+
+    #page-project-detail .project-hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(10, 10, 10, .3) 0%, rgba(10, 10, 10, .8) 100%)
+    }
+
+    #page-project-detail .project-hero-content {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: clamp(2rem, 5vw, 5rem);
+      max-width: 1500px;
+      margin: 0 auto
+    }
+
+    .project-detail-body {
+      max-width: 1500px;
+      margin: 0 auto;
+      padding: clamp(3rem, 6vw, 6rem) clamp(1.25rem, 4vw, 3rem)
+    }
+
+    .project-meta-grid {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: clamp(3rem, 6vw, 6rem);
+      margin-bottom: clamp(3rem, 6vw, 6rem)
+    }
+
+    @media (max-width:768px) {
+      .project-meta-grid {
+        grid-template-columns: 1fr
+      }
+    }
+
+    .project-specs {
+      border-top: 1px solid var(--border)
+    }
+
+    .spec-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      padding: 1.1rem 0;
+      border-bottom: 1px solid var(--border)
+    }
+
+    .spec-row .spec-k {
+      font-size: .7rem;
+      letter-spacing: .28em;
+      text-transform: uppercase;
+      color: var(--muted)
+    }
+
+    .spec-row .spec-v {
+      font-size: .95rem;
+      color: var(--bone)
+    }
+
+    .project-description h2 {
+      font-family: 'Bodoni Moda', serif;
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      font-weight: 300;
+      line-height: 1.05;
+      letter-spacing: -.02em;
+      margin-bottom: 1.5rem
+    }
+
+    .project-description h2 em {
+      color: var(--champagne);
+      font-style: italic
+    }
+
+    .project-description p {
+      color: var(--muted);
+      font-size: 1rem;
+      line-height: 1.8;
+      max-width: 600px;
+      margin-bottom: 1.2rem
+    }
+
+    .project-gallery-strip {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-top: clamp(3rem, 6vw, 6rem)
+    }
+
+    @media (max-width:768px) {
+      .project-gallery-strip {
+        grid-template-columns: 1fr
+      }
+    }
+
+    .strip-img {
+      aspect-ratio: 4/3;
+      overflow: hidden;
+      background: var(--ink-2)
+    }
+
+    .strip-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 1.2s var(--ease);
+      filter: brightness(.8)
+    }
+
+    .strip-img:hover img {
+      transform: scale(1.05);
+      filter: brightness(.9)
+    }
+
+    /* ── NOSOTROS ── */
+    #page-nosotros .nosotros-hero {
+      height: 60vh;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: flex-end
+    }
+
+    #page-nosotros .nosotros-hero img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: brightness(.45)
+    }
+
+    #page-nosotros .nosotros-hero-content {
+      position: relative;
+      z-index: 2;
+      padding: clamp(2rem, 5vw, 5rem);
+      max-width: 1500px;
+      width: 100%;
+      margin: 0 auto
+    }
+
+    .nosotros-body {
+      max-width: 1500px;
+      margin: 0 auto;
+      padding: clamp(4rem, 8vw, 8rem) clamp(1.25rem, 4vw, 3rem)
+    }
+
+    .nosotros-2col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(3rem, 7vw, 8rem);
+      align-items: start
+    }
+
+    @media (max-width:900px) {
+      .nosotros-2col {
+        grid-template-columns: 1fr
+      }
+    }
+
+    .nosotros-body h2 {
+      font-family: 'Bodoni Moda', serif;
+      font-size: clamp(2.4rem, 5vw, 5rem);
+      font-weight: 300;
+      letter-spacing: -.025em;
+      line-height: 1.0
+    }
+
+    .nosotros-body h2 em {
+      color: var(--champagne);
+      font-style: italic
+    }
+
+    .nosotros-body p {
+      color: var(--muted);
+      font-size: 1rem;
+      line-height: 1.8;
+      margin-top: 1.5rem
+    }
+
+    .nosotros-img-stack {
+      position: relative;
+      height: clamp(400px, 55vw, 700px)
+    }
+
+    .nosotros-img-stack .img-main {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 75%;
+      height: 80%;
+      overflow: hidden
+    }
+
+    .nosotros-img-stack .img-main img,
+    .nosotros-img-stack .img-accent img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover
+    }
+
+    .nosotros-img-stack .img-accent {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 48%;
+      height: 50%;
+      overflow: hidden;
+      border: 4px solid var(--ink)
+    }
+
+    .valores-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1px;
+      background: var(--border);
+      margin-top: clamp(4rem, 8vw, 8rem)
+    }
+
+    .valor-item {
+      background: var(--ink);
+      padding: 2.5rem 2rem
+    }
+
+    .valor-item .v-num {
+      font-family: 'Bodoni Moda', serif;
+      font-style: italic;
+      font-size: 2.5rem;
+      color: rgba(187, 170, 148, .2);
+      margin-bottom: 1rem
+    }
+
+    .valor-item h3 {
+      font-family: 'Bodoni Moda', serif;
+      font-size: 1.4rem;
+      font-weight: 300;
+      color: var(--bone);
+      margin-bottom: .75rem
+    }
+
+    .valor-item p {
+      font-size: .9rem;
+      color: var(--muted);
+      line-height: 1.7
+    }
+
+    .equipo-section {
+      margin-top: clamp(5rem, 10vw, 10rem)
+    }
+
+    .equipo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 2rem;
+      margin-top: clamp(2rem, 4vw, 4rem)
+    }
+
+    .miembro-card {
+      position: relative;
+      overflow: hidden
+    }
+
+    .miembro-img {
+      aspect-ratio: 3/4;
+      overflow: hidden;
+      background: var(--ink-2);
+      margin-bottom: 1.5rem
+    }
+
+    .miembro-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: brightness(.7) grayscale(.3);
+      transition: all 1.2s var(--ease)
+    }
+
+    .miembro-card:hover .miembro-img img {
+      filter: brightness(.8) grayscale(0);
+      transform: scale(1.04)
+    }
+
+    .miembro-name {
+      font-family: 'Bodoni Moda', serif;
+      font-size: 1.5rem;
+      font-weight: 300;
+      color: var(--bone)
+    }
+
+    .miembro-role {
+      font-size: .7rem;
+      letter-spacing: .28em;
+      text-transform: uppercase;
+      color: var(--champagne);
+      margin-top: .3rem
+    }
+
+    .miembro-bio {
+      font-size: .88rem;
+      color: var(--muted);
+      line-height: 1.7;
+      margin-top: .75rem;
+      max-width: 280px
+    }
+
+    /* ── TESTIMONIOS ── */
+    .testimonios {
+      padding: clamp(6rem, 12vw, 12rem) 0;
+      background: var(--bone);
+      color: var(--ink);
+      position: relative;
+      overflow: hidden
+    }
+
+    .testimonios::after {
+      content: '';
+      position: absolute;
+      bottom: -4rem;
+      right: -2rem;
+      width: 40vw;
+      height: 40vw;
+      border-radius: 50%;
+      background: rgba(122, 32, 33, .06);
+      pointer-events: none
+    }
+
+    .test-slider {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      margin-top: clamp(3rem, 6vw, 5rem)
+    }
+
+    @media (max-width:900px) {
+      .test-slider {
+        grid-template-columns: 1fr
+      }
+    }
+
+    .test-card {
+      padding: 2.5rem;
+      border: 1px solid rgba(10, 10, 10, .1);
+      position: relative;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity .8s var(--ease), transform .8s var(--ease)
+    }
+
+    .test-card.visible {
+      opacity: 1;
+      transform: translateY(0)
+    }
+
+    .test-card:nth-child(2) {
+      transition-delay: .1s
+    }
+
+    .test-card:nth-child(3) {
+      transition-delay: .2s
+    }
+
+    .test-card::before {
+      content: '❝';
+      position: absolute;
+      top: 1.5rem;
+      right: 1.5rem;
+      font-family: 'Bodoni Moda', serif;
+      font-size: 3rem;
+      color: rgba(10, 10, 10, .08);
+      line-height: 1
+    }
+
+    .test-card blockquote {
+      font-family: 'Bodoni Moda', serif;
+      font-size: clamp(1rem, 1.4vw, 1.2rem);
+      font-weight: 300;
+      line-height: 1.7;
+      color: var(--ink);
+      margin-bottom: 2rem
+    }
+
+    .test-client {
+      display: flex;
+      align-items: center;
+      gap: 1rem
+    }
+
+    .test-avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: rgba(10, 10, 10, .12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Bodoni Moda', serif;
+      font-style: italic;
+      font-size: 1.2rem;
+      color: var(--oxblood)
+    }
+
+    .test-info .name {
+      font-size: .9rem;
+      font-weight: 600;
+      color: var(--ink)
+    }
+
+    .test-info .project {
+      font-size: .75rem;
+      color: var(--muted-2);
+      text-transform: uppercase;
+      letter-spacing: .2em;
+      margin-top: .2rem
+    }
+
+    .test-stars {
+      display: flex;
+      gap: 3px;
+      margin-bottom: 1.5rem
+    }
+
+    .test-stars span {
+      font-size: .8rem;
+      color: var(--oxblood)
+    }
+
+    .test-logos {
+      margin-top: clamp(3rem, 6vw, 5rem);
+      padding-top: clamp(2rem, 4vw, 3rem);
+      border-top: 1px solid rgba(10, 10, 10, .1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: clamp(2rem, 5vw, 5rem);
+      color: var(--muted-2);
+      font-size: .7rem;
+      letter-spacing: .4em;
+      text-transform: uppercase
+    }
+
+    .test-logos span {
+      font-family: 'Bodoni Moda', serif;
+      font-size: 1.1rem;
+      letter-spacing: .2em;
+      opacity: .4;
+      font-style: italic
+    }
+
+    /* ── FILOSOFÍA ── */
+    .filosofia {
+      background: var(--bone);
+      color: var(--ink);
+      padding: clamp(7rem, 14vw, 14rem) clamp(1.25rem, 4vw, 3rem);
+      position: relative;
+      overflow: hidden
+    }
+
+    .filosofia .ov {
+      color: var(--oxblood)
+    }
+
+    .filosofia h2 {
+      font-family: 'Bodoni Moda', serif;
+      font-size: clamp(2.4rem, 7vw, 7.5rem);
+      line-height: .98;
+      font-weight: 300;
+      color: var(--ink);
+      letter-spacing: -.025em;
+      margin: 2rem 0 clamp(3rem, 6vw, 5rem);
+      max-width: 20ch
+    }
+
+    .filosofia h2 em {
+      font-style: italic;
+      color: var(--oxblood)
+    }
+
+    .filosofia p.lead {
+      font-size: clamp(1.05rem, 1.4vw, 1.25rem);
+      line-height: 1.7;
+      color: var(--ink);
+      font-weight: 300;
+      max-width: 720px
+    }
+
+    .filosofia p.body {
+      font-size: 1rem;
+      line-height: 1.8;
+      color: var(--muted);
+      margin-top: 2rem;
+      max-width: 720px
+    }
+
+    .stats {
+      margin-top: clamp(3rem, 5vw, 4rem);
+      padding-top: clamp(2rem, 4vw, 3rem);
+      border-top: 1px solid rgba(10, 10, 10, .15);
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 2rem
+    }
+
+    .stats .n {
+      font-family: 'Bodoni Moda', serif;
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      color: var(--ink);
+      line-height: 1
+    }
+
+    .stats .t {
+      color: var(--muted);
+      margin-top: .5rem
+    }
+
+    .filosofia .mark {
+      position: absolute;
+      bottom: -2rem;
+      right: -1rem;
+      font-family: 'Bodoni Moda', serif;
+      font-style: italic;
+      font-weight: 300;
+      font-size: clamp(8rem, 18vw, 22rem);
+      color: rgba(10, 10, 10, .04);
+      pointer-events: none;
+      line-height: 1
+    }
+
+    /* ── CONTACT ── */
+    .contact {
+      background: var(--ink);
+      padding: clamp(7rem, 12vw, 11rem) clamp(1.25rem, 4vw, 3rem);
+      border-top: 1px solid var(--border)
+    }
+
+    .contact-grid {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: clamp(3rem, 5vw, 5rem)
+    }
+
+    @media (min-width:900px) {
+      .contact-grid {
+        grid-template-columns: 1fr 1fr
+      }
+    }
+
+    .contact h2 {
+      font-family: 'Bodoni Moda', serif;
+      font-size: clamp(2.6rem, 6vw, 6rem);
+      line-height: .98;
+      font-weight: 300;
+      color: var(--bone);
+      letter-spacing: -.02em
+    }
+
+    .contact h2 em {
+      color: var(--champagne)
+    }
+
+    .contact p.intro {
+      color: var(--muted);
+      font-size: 1rem;
+      line-height: 1.7;
+      margin-top: 2rem;
+      max-width: 440px
+    }
+
+    .contact .info {
+      margin-top: clamp(3rem, 5vw, 4rem)
+    }
+
+    .contact .info a {
+      color: var(--bone);
+      text-decoration: none;
+      border-bottom: 1px solid var(--champagne);
+      padding-bottom: 2px;
+      transition: color .3s
+    }
+
+    .contact .info a:hover {
+      color: var(--champagne)
+    }
+
+    .contact-detail-row {
+      display: flex;
+      gap: 3rem;
+      flex-wrap: wrap;
+      margin-top: 2rem
+    }
+
+    .contact-detail-item .label {
+      font-size: .65rem;
+      letter-spacing: .32em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: .4rem
+    }
+
+    .contact-detail-item .val {
+      font-size: .95rem;
+      color: var(--bone)
+    }
+
+    form .field {
+      margin-top: 1rem
+    }
+
+    form label {
+      display: block;
+      font-size: .7rem;
+      letter-spacing: .32em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: .5rem;
+      font-weight: 500
+    }
+
+    .lux-field {
+      background: transparent;
+      border: 0;
+      border-bottom: 1px solid var(--border);
+      color: var(--bone);
+      width: 100%;
+      padding: 1rem 0;
+      font-family: 'Manrope', sans-serif;
+      font-size: 1rem;
+      outline: none;
+      transition: border-color .4s var(--ease)
+    }
+
+    .lux-field:focus {
+      border-bottom-color: var(--champagne)
+    }
+
+    textarea.lux-field {
+      resize: none;
+      min-height: 130px
+    }
+
+    .types {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .6rem;
+      margin-top: .75rem
+    }
+
+    .type-btn {
+      padding: .55rem 1rem;
+      font-size: .7rem;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--bone);
+      transition: all .35s var(--ease)
+    }
+
+    .type-btn.active {
+      border-color: var(--champagne);
+      background: rgba(187, 170, 148, .12);
+      color: var(--champagne)
+    }
+
+    .submit {
+      margin-top: 2rem;
+      padding: 1rem 2.5rem;
+      background: var(--champagne);
+      color: var(--ink);
+      border: 0;
+      font-size: .7rem;
+      letter-spacing: .32em;
+      text-transform: uppercase;
+      font-weight: 500;
+      transition: all .4s var(--ease)
+    }
+
+    .submit:hover {
+      background: var(--oxblood);
+      color: var(--bone)
+    }
+
+    .feedback {
+      margin-top: 1.5rem;
+      padding: 1rem 1.25rem;
+      font-size: .85rem;
+      line-height: 1.6;
+      display: none
+    }
+
+    .feedback.ok {
+      display: block;
+      border: 1px solid var(--champagne);
+      color: var(--champagne)
+    }
+
+    .feedback.err {
+      display: block;
+      border: 1px solid var(--oxblood);
+      color: #E5A1A1
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--ink);
+      border-top: 1px solid var(--border);
+      padding: clamp(4rem, 8vw, 8rem) clamp(1.25rem, 4vw, 3rem) 3rem
+    }
+
+    .footer-mark {
+      font-family: 'Bodoni Moda', serif;
+      font-size: clamp(5rem, 22vw, 22rem);
+      color: var(--bone);
+      opacity: .05;
+      line-height: .85;
+      font-weight: 300;
+      letter-spacing: -.04em;
+      user-select: none;
+      margin-bottom: 3rem
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2.5rem;
+      padding-bottom: 3rem;
+      border-bottom: 1px solid var(--border)
+    }
+
+    .footer-grid h4 {
+      color: var(--champagne);
+      font-size: .7rem;
+      letter-spacing: .32em;
+      text-transform: uppercase;
+      margin-bottom: .75rem;
+      font-weight: 500
+    }
+
+    .footer-grid p,
+    .footer-grid a {
+      color: var(--bone);
+      font-size: .95rem;
+      line-height: 1.7;
+      text-decoration: none;
+      display: block;
+      margin-bottom: .4rem;
+      transition: color .3s
+    }
+
+    .footer-grid a:hover {
+      color: var(--champagne)
+    }
+
+    .copy {
+      padding-top: 2rem;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+      color: var(--muted);
+      font-size: .7rem;
+      letter-spacing: .2em;
+      text-transform: uppercase
+    }
+
+    .copy a {
+      color: var(--muted);
+      text-decoration: none;
+      transition: color .3s
+    }
+
+    .copy a:hover {
+      color: var(--champagne)
+    }
+
+    /* ── LIGHTBOX ── */
+    #lightbox {
+      position: fixed;
+      inset: 0;
+      background: rgba(10, 10, 10, .97);
+      z-index: 200000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(4px)
+    }
+
+    #lightbox.open {
+      display: flex
+    }
+
+    #lightbox img {
+      max-width: 90vw;
+      max-height: 90vh;
+      object-fit: contain;
+      animation: lbIn .5s var(--ease)
+    }
+
+    @keyframes lbIn {
+      from {
+        opacity: 0;
+        transform: scale(.96)
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1)
+      }
+    }
+
+    #lightbox-close {
+      position: absolute;
+      top: 2rem;
+      right: 2rem;
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--bone);
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      font-size: .9rem;
+      letter-spacing: .1em;
+      transition: all .3s
+    }
+
+    #lightbox-close:hover {
+      background: var(--bone);
+      color: var(--ink)
+    }
+
+    #lightbox-prev,
+    #lightbox-next {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--bone);
+      width: 48px;
+      height: 48px;
+      font-size: 1.2rem;
+      transition: all .3s
+    }
+
+    #lightbox-prev {
+      left: 1.5rem
+    }
+
+    #lightbox-next {
+      right: 1.5rem
+    }
+
+    #lightbox-prev:hover,
+    #lightbox-next:hover {
+      background: var(--champagne);
+      color: var(--ink);
+      border-color: var(--champagne)
+    }
+
+    #lightbox-caption {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: .75rem;
+      letter-spacing: .28em;
+      text-transform: uppercase;
+      color: var(--muted)
+    }
+
+    /* ── REVEAL ON SCROLL utility ── */
+    .scroll-reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity .9s var(--ease), transform .9s var(--ease)
+    }
+
+    .scroll-reveal.visible {
+      opacity: 1;
+      transform: translateY(0)
+    }
+  </style>
+</head>
+
+<body class="loaded">
+
+  <div id="scroll-bar" style="width: 0%;"></div>
+
+  <!-- LOADER DINÁMICO -->
+  <div id="loader">
+    <div class="loader-content">
+      <div class="loader-logo-wrap">
+        <span class="brand-char">D</span>
+        <span class="brand-char">E</span>
+        <span class="brand-char">L</span>
+        <span class="brand-char">E</span>
+        <span class="brand-char">Y</span>
+      </div>
+      <div class="sub overline">Cocinas . Baños . Armarios</div>
+      <div class="progress-container">
+        <div class="progress-fill" id="loaderProgress"></div>
+      </div>
+      <div class="loader-counter overline">0%</div>
+    </div>
+  </div>
+
+  <div class="cursor-dot visible" id="cursorDot"
+    style="transform: translate3d(921px, 418px, 0px) translate(-50%, -50%);"></div>
+  <div class="cursor-ring visible" id="cursorRing"
+    style="transform: translate3d(921px, 418px, 0px) translate(-50%, -50%);"></div>
+
+  <!-- MOBILE MENU -->
+  <div id="mobile-menu">
+    <button onclick="scrollToSection(&#39;filosofia&#39;);closeMobileMenu()">Filosofía</button>
+    <button onclick="scrollToSection(&#39;portales&#39;);closeMobileMenu()">Colecciones</button>
+    <button onclick="openNosotros()">Nosotros</button>
+    <button onclick="scrollToSection(&#39;contacto&#39;);closeMobileMenu()">Contacto</button>
+    <div class="m-footer overline">Alfaro, La Rioja · 1986</div>
+  </div>
+
+  <nav id="nav" class="">
+    <button class="logo" onclick="goHome()">DELEY</button>
+    <div class="nav-links">
+      <button onclick="scrollToSection(&#39;filosofia&#39;)">Filosofía</button>
+      <button onclick="scrollToSection(&#39;portales&#39;)">Colecciones</button>
+      <button onclick="openNosotros()">Nosotros</button>
+      <button onclick="scrollToSection(&#39;contacto&#39;)">Contacto</button>
+    </div>
+    <div class="nav-btns">
+      <button id="back-btn" class="btn-nav" onclick="goBack()" style="display: block;">← Volver</button>
+      <button class="btn-nav" onclick="abrirLogin()">Área Clientes</button>
+      <button class="hamburger" id="hamburger" onclick="toggleMobileMenu()" aria-label="Menú">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ═══════════════════ PAGE HOME ═══════════════════ -->
+  <div id="page-home" class="page">
+
+    <section class="hero">
+      <div class="hero-bg" style="background-image:url(&#39;IMAGEN COCINA PAGINA PPAL.webp&#39;)"></div>
+      <div class="hero-overlay"></div>
+      <div class="hero-content">
+        <div class="hero-overline overline">DELEY · 1986 — Hoy</div>
+        <h1>
+          <span class="reveal d1"><span>Alta Ingeniería</span></span><br>
+          <span class="reveal d2"><span><em>Doméstica.</em></span></span>
+        </h1>
+        <div class="hero-row">
+          <p>Cocinas, baños y vestidores diseñados como arquitectura interior. Fabricación de autor en Alfaro, La Rioja
+            — cada proyecto, una pieza única.</p>
+          <button class="btn-outline" onclick="scrollToSection(&#39;portales&#39;)">Descubrir Colecciones</button>
+        </div>
+      </div>
+      <div class="mouse-cue">
+        <div class="mouse-icon">
+          <div class="mouse-wheel"></div>
+        </div>
+        <div>Scroll</div>
+      </div>
+    </section>
+
+    <!-- PORTALES -->
+    <section id="portales" class="portals">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <div class="overline" style="color:var(--champagne);margin-bottom:1rem">⊹ Universos</div>
+            <h2>Tres territorios, <em>una obsesión.</em></h2>
+          </div>
+          <p>Más de dos décadas perfeccionando un único objetivo: hacer que la arquitectura interior funcione con la
+            precisión de un instrumento.</p>
+        </div>
+        <div id="portal-list">
+          <button class="portal-row" onclick="goTo(&#39;subportal:colecciones&#39;)">
+            <span class="num">— 01</span>
+            <div>
+              <h3>Colecciones</h3>
+              <div class="sub">Cocinas · Baños · Armarios</div>
+            </div>
+            <div class="preview" style="background-image:url(&#39;003 - CASA 3 COCINA.webp&#39;)"></div>
+          </button>
+          <button class="portal-row" onclick="goTo(&#39;subportal:proyectos&#39;)">
+            <span class="num">— 02</span>
+            <div>
+              <h3>Proyectos</h3>
+              <div class="sub">Viviendas Unifamiliares</div>
+            </div>
+            <div class="preview" style="background-image:url(&#39;001 - CASA 1 COCINA.webp&#39;)"></div>
+          </button>
+          <button class="portal-row" onclick="goTo(&#39;subportal:id&#39;)">
+            <span class="num">— 03</span>
+            <div>
+              <h3>I+D Fabricación</h3>
+              <div class="sub">Centro de Producción</div>
+            </div>
+            <div class="preview" style="background-image:url(&#39;002 - CASA 2 COCINA.webp&#39;)"></div>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROCESO -->
+    <section id="proceso" class="proceso">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <div class="overline" style="color:var(--champagne);margin-bottom:1rem">⊹ Método</div>
+            <h2
+              style="font-family:&#39;Bodoni Moda&#39;,serif;font-size:clamp(2.2rem,5vw,4.6rem);line-height:1;font-weight:300;color:var(--bone);letter-spacing:-.02em">
+              Del briefing <em style="color:var(--champagne)">a la entrega.</em></h2>
+          </div>
+          <p style="max-width:360px;color:var(--muted);font-size:.95rem;line-height:1.7">Un proceso de cuatro actos, sin
+            atajos. Cada decisión documentada. Cada pieza trazada.</p>
+        </div>
+        <div class="proceso-grid" id="proceso-grid">
+          <div class="proceso-step">
+            <div class="step-n">01</div>
+            <h3>Escucha</h3>
+            <p>Primera reunión sin catálogos. Entendemos cómo vives, qué gestos realizas en la cocina, cómo te
+              relacionas con el orden. El briefing no es un formulario, es una conversación.</p>
+            <span class="tag">Semana 1–2</span>
+          </div>
+          <div class="proceso-step">
+            <div class="step-n">02</div>
+            <h3>Diseño</h3>
+            <p>3D fotorrealista, planos técnicos y muestrario de materiales a escala. Hasta tres rondas de revisión sin
+              coste. No pasamos a fabricación hasta que la aprobación sea unánime.</p>
+            <span class="tag">Semana 3–6</span>
+          </div>
+          <div class="proceso-step">
+            <div class="step-n">03</div>
+            <h3>Fabricación</h3>
+            <p>Todo se produce en nuestro centro de Alfaro. CNC de 5 ejes, cabinas de lacado presurizado y carpintería
+              artesanal bajo el mismo techo. Tolerancias de ±0,05mm.</p>
+            <span class="tag">Semana 7–14</span>
+          </div>
+          <div class="proceso-step">
+            <div class="step-n">04</div>
+            <h3>Entrega</h3>
+            <p>Instaladores propios. Coordinación directa con arquitecto y obra. Entregamos con obra terminada, no
+              dejamos materiales a pie de obra. Garantía de 10 años en estructura.</p>
+            <span class="tag">Semana 15–18</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TESTIMONIOS -->
+    <section class="testimonios">
+      <div class="container">
+        <div class="section-head" style="color:var(--ink)">
+          <div>
+            <div class="overline" style="color:var(--oxblood);margin-bottom:1rem">⊹ Clientes</div>
+            <h2
+              style="font-family:&#39;Bodoni Moda&#39;,serif;font-size:clamp(2.2rem,5vw,4.6rem);line-height:1;font-weight:300;color:var(--ink);letter-spacing:-.02em;max-width:16ch">
+              Lo que dicen quienes <em style="color:var(--oxblood)">ya viven</em> con Deley.</h2>
+          </div>
+          <p style="max-width:360px;color:var(--muted-2);font-size:.95rem;line-height:1.7">Más de 800 proyectos
+            entregados. Cada uno, una relación a largo plazo.</p>
+        </div>
+        <div class="test-slider" id="test-slider">
+          <div class="test-card">
+            <div class="test-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+            <blockquote>«Deley no vende cocinas, vende proyectos de vida. El nivel de escucha durante el proceso de
+              diseño fue extraordinario. Sentí que el equipo entendía no solo lo que pedía, sino por qué lo pedía.»
+            </blockquote>
+            <div class="test-client">
+              <div class="test-avatar">L</div>
+              <div class="test-info">
+                <div class="name">Laura G.</div>
+                <div class="project overline">Cocina — Casa 1</div>
+              </div>
+            </div>
+          </div>
+          <div class="test-card">
+            <div class="test-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+            <blockquote>«Después de tres presupuestos con otras empresas, Deley fue la única que llegó con un plano 3D
+              detallado en la primera visita. La diferencia de rigor es abismal. Los plazos, cumplidos al día.»
+            </blockquote>
+            <div class="test-client">
+              <div class="test-avatar">M</div>
+              <div class="test-info">
+                <div class="name">Marc T.</div>
+                <div class="project overline">Reforma Integral — Eixample</div>
+              </div>
+            </div>
+          </div>
+          <div class="test-card">
+            <div class="test-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+            <blockquote>«Trabajamos en arquitectura y somos muy exigentes. Deley fue la única empresa que hablaba
+              nuestro idioma: tolerancias, acabados de obra, coordinación con instalaciones. Perfecto en todo.»
+            </blockquote>
+            <div class="test-client">
+              <div class="test-avatar">A</div>
+              <div class="test-info">
+                <div class="name">Ana &amp; Jordi S.</div>
+                <div class="project overline">Vivienda Completa — Costa Brava</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="test-logos" id="test-logos"><span>ARQO Studio</span><span>Habitat Interiors</span><span>Diseño
+            Sur</span><span>Reformas Premium</span><span>Contratas Norte</span></div>
+      </div>
+    </section>
+
+    <!-- FILOSOFÍA -->
+    <section id="filosofia" class="filosofia">
+      <div class="container" style="padding:0">
+        <div class="overline ov">⊹ Filosofía</div>
+        <h2>No fabricamos muebles. <em>Diseñamos arquitectura interior.</em></h2>
+        <p class="lead">Nacimos en Alfaro. Dos décadas después, seguimos creyendo que una cocina, un baño o un vestidor
+          son las piezas más íntimas de una casa. La precisión con la que se ensamblan no admite atajos.</p>
+        <p class="body">Cada cliente recibe un equipo dedicado, diseñamos en CAD 3D, prototipamos en CNC y entregamos en
+          obra con instaladores propios. Sin intermediarios.</p>
+        <div class="stats">
+          <div>
+            <div class="n">25+</div>
+            <div class="t overline">años de oficio</div>
+          </div>
+          <div>
+            <div class="n">800+</div>
+            <div class="t overline">proyectos entregados</div>
+          </div>
+          <div>
+            <div class="n">12.000m²</div>
+            <div class="t overline">centro propio</div>
+          </div>
+          <div>
+            <div class="n">±0,05</div>
+            <div class="t overline">mm tolerancia</div>
+          </div>
+        </div>
+      </div>
+      <div class="mark">Deley.</div>
+    </section>
+
+    <!-- CONTACTO -->
+    <section id="contacto" class="contact">
+      <div class="contact-grid">
+        <div>
+          <div class="overline" style="color:var(--champagne);margin-bottom:1rem">⊹ Contacto</div>
+          <h2>Empecemos un <em>proyecto</em>.</h2>
+          <p class="intro">Cuéntanos quién eres y en qué estás trabajando. Nuestro equipo responde en 24h.</p>
+          <div class="info">
+            <div class="overline" style="color:var(--muted);margin-bottom:.75rem">Estudio · Producción</div>
+            <div style="line-height:1.8;color:var(--bone);opacity:.8">c/ Fitero, 1<br>26540 — Alfaro, La Rioja</div>
+            <div class="contact-detail-row">
+              <div class="contact-detail-item">
+                <div class="label">Email</div>
+                <div class="val"><a href="mailto:estudio@deleymobiliario.es"
+                    style="color:var(--bone);text-decoration:none;border-bottom:1px solid var(--champagne);padding-bottom:1px">estudio@deleymobiliario.es</a>
+                </div>
+              </div>
+              <div class="contact-detail-item">
+                <div class="label">Teléfono</div>
+                <div class="val"><a href="tel:+34941181985"
+                    style="color:var(--bone);text-decoration:none;border-bottom:1px solid var(--champagne);padding-bottom:1px">+34
+                    941 181 985</a></div>
+              </div>
+            </div>
+            <div style="margin-top:2rem;display:flex;gap:1rem">
+              <a href="https://www.instagram.com/deleymobiliario/" target="_blank"
+                style="font-size:.7rem;letter-spacing:.28em;text-transform:uppercase;color:var(--muted);text-decoration:none;border-bottom:1px solid var(--border);padding-bottom:2px;transition:color .3s">Instagram
+                ↗</a>
+              <a href="https://es.pinterest.com/Deleymobiliario/" target="_blank"
+                style="font-size:.7rem;letter-spacing:.28em;text-transform:uppercase;color:var(--muted);text-decoration:none;border-bottom:1px solid var(--border);padding-bottom:2px;transition:color .3s">Pinterest
+                ↗</a>
+            </div>
+          </div>
+        </div>
+        <form id="contact-form" onsubmit="submitContact(event)">
+          <div class="field"><label>Nombre</label><input class="lux-field" name="name" required=""></div>
+          <div class="field"><label>Email</label><input class="lux-field" type="email" name="email" required=""></div>
+          <div class="field"><label>Teléfono (opcional)</label><input class="lux-field" name="phone"></div>
+          <div class="field">
+            <label>Tipo de proyecto</label>
+            <div class="types" id="types">
+              <button type="button" class="type-btn">Cocina</button>
+              <button type="button" class="type-btn">Baño</button>
+              <button type="button" class="type-btn">Armario / Vestidor</button>
+              <button type="button" class="type-btn">Vivienda completa</button>
+              <button type="button" class="type-btn">Otro</button>
+            </div>
+          </div>
+          <div class="field"><label>Mensaje</label><textarea class="lux-field" name="message" required=""
+              placeholder="Cuéntanos sobre tu proyecto…"></textarea></div>
+          <button class="submit" type="submit">Enviar mensaje</button>
+          <div class="feedback" id="feedback"></div>
+        </form>
+      </div>
+    </section>
+  </div>
+
+  <!-- ═══════════════════ PAGE SUBPORTAL ═══════════════════ -->
+  <div id="page-subportal" class="page active">
+    <section class="subportal container">
+      <div class="overline" style="color:var(--champagne);margin-bottom:1.5rem" id="sp-overline">⊹ Proyectos</div>
+      <h2 id="sp-title"
+        style="font-family:&#39;Bodoni Moda&#39;,serif;font-size:clamp(2.6rem,6vw,6rem);line-height:1;font-weight:300;color:var(--bone);letter-spacing:-.02em;margin-bottom:1rem">
+        Obra <em style="color:var(--champagne);font-style:italic">construida.</em></h2>
+      <p id="sp-desc"
+        style="color:var(--muted);max-width:540px;font-size:1rem;line-height:1.7;margin-bottom:clamp(3rem,6vw,5rem)">
+        Residencias documentadas en detalle — del croquis al detalle constructivo.</p>
+      <div id="sub-grid" class="sub-grid" style="grid-template-columns: repeat(1, minmax(0px, 1fr));">
+        <button class="sub-card" onclick="goTo(&#39;gallery:proyectos&#39;)">
+          <img src="file:///C:/Users/Ruben/Downloads/001%20-%20CASA%201%20COCINA.webp" alt="Viviendas Unifamiliares">
+          <div class="overlay"></div>
+          <div class="label">
+            <div class="ov overline">Explorar →</div>
+            <h3>Viviendas Unifamiliares</h3>
+          </div>
+        </button>
+      </div>
+    </section>
+  </div>
+
+  <!-- ═══════════════════ PAGE GALLERY ═══════════════════ -->
+  <div id="page-gallery" class="page">
+    <section class="gallery container">
+      <div class="gallery-head">
+        <div>
+          <div class="overline" style="color:var(--champagne);margin-bottom:1rem" id="g-overline"></div>
+          <h1 id="g-title"></h1>
+        </div>
+        <p id="g-intro"></p>
+      </div>
+      <div class="gallery-grid" id="g-grid"></div>
+    </section>
+  </div>
+
+  <!-- ═══════════════════ PAGE PROJECT DETAIL ═══════════════════ -->
+  <div id="page-project-detail" class="page">
+    <div class="project-hero">
+      <img id="pd-hero-img" src="file:///C:/Users/Ruben/Downloads/deley_v4_1.html" alt="">
+      <div class="project-hero-overlay"></div>
+      <div class="project-hero-content">
+        <div class="overline" id="pd-overline" style="color:var(--champagne);margin-bottom:1rem"></div>
+        <h1 id="pd-title"
+          style="font-family:&#39;Bodoni Moda&#39;,serif;font-size:clamp(3rem,8vw,7rem);font-weight:300;letter-spacing:-.03em;line-height:.95;color:var(--bone)">
+        </h1>
+      </div>
+    </div>
+    <div class="project-detail-body">
+      <div class="project-meta-grid">
+        <div class="project-specs" id="pd-specs"></div>
+        <div class="project-description">
+          <h2 id="pd-desc-title"></h2>
+          <div id="pd-desc-body"></div>
+          <button class="btn-outline" onclick="scrollToSection(&#39;contacto&#39;);goHome()"
+            style="margin-top:2.5rem;border-color:var(--champagne);color:var(--champagne)">Iniciar Proyecto
+            Similar</button>
+        </div>
+      </div>
+      <div class="project-gallery-strip" id="pd-strip"></div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════ PAGE NOSOTROS ═══════════════════ -->
+  <div id="page-nosotros" class="page">
+    <div class="nosotros-hero">
+      <img src="file:///C:\Users\Ruben\Desktop\web deley (ruben)\002 - CASA 2 ARMARIO.webp">
+      <div
+        style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,10,10,.4) 0%,rgba(10,10,10,.75) 100%)">
+      </div>
+      <div class="nosotros-hero-content">
+        <div class="overline" style="color:var(--champagne);margin-bottom:1rem">⊹ Nosotros</div>
+        <h1
+          style="font-family:&#39;Bodoni Moda&#39;,serif;font-size:clamp(3rem,8vw,7rem);font-weight:200;letter-spacing:-.03em;line-height:.95;color:var(--bone)">
+          Artesanía <em style="color:var(--champagne);font-style:italic">con rigor</em><br>de ingeniería.</h1>
+      </div>
+    </div>
+    <div class="nosotros-body">
+      <div class="nosotros-2col scroll-reveal">
+        <div>
+          <h2>Desde Alfaro, <em>para el mundo.</em></h2>
+          <p>Deley nació en 1986 en Alfaro, La Rioja, con una premisa clara: fabricar mobiliario de interior con la
+            misma exigencia con que se construye arquitectura. Tres décadas después, esa premisa no ha cambiado.</p>
+          <p>Lo que sí ha evolucionado es nuestra capacidad. Hoy contamos con un centro de producción de 12.000m²
+            equipado con maquinaria CNC de 5 ejes, cabinas de lacado presurizado y un equipo de 45 especialistas.</p>
+          <p>Trabajamos exclusivamente con estudio propio y entrega con instaladores propios. Sin cadenas de
+            distribución. Sin concesionarios. El mismo equipo que diseña, instala.</p>
+          <button class="btn-outline" onclick="scrollToSection(&#39;contacto&#39;);goHome()"
+            style="margin-top:2rem;border-color:var(--champagne);color:var(--champagne)">Contactar con el
+            equipo</button>
+        </div>
+        <div class="nosotros-img-stack">
+          <div class="img-main"><img src="file:///C:\Users\Ruben\Desktop\web deley (ruben)\002 - CASA 2 ARMARIO.webp"
+              alt="Taller Deley"></div>
+          <div class="img-accent"><img src="file:///C:\Users\Ruben\Desktop\web deley (ruben)\002 - CASA 2 ARMARIO.webp"
+              alt="Detalle"></div>
+        </div>
+      </div>
+
+      <!-- VALORES -->
+      <div class="valores-grid" id="valores-grid">
+        <div class="valor-item">
+          <div class="v-num">I</div>
+          <h3>Precisión</h3>
+          <p>±0,05mm de tolerancia en cada pieza mecanizada. No es marketing, es el estándar mínimo de nuestro control
+            de calidad.</p>
+        </div>
+        <div class="valor-item">
+          <div class="v-num">II</div>
+          <h3>Autoría</h3>
+          <p>Cada proyecto lo firma un diseñador interno que lo acompaña de principio a fin. Sin traspasos, sin pérdidas
+            de información.</p>
+        </div>
+        <div class="valor-item">
+          <div class="v-num">III</div>
+          <h3>Materia</h3>
+          <p>Seleccionamos personalmente los lotes de madera. Cada chapa tiene un origen documentado y un número de lote
+            trazable.</p>
+        </div>
+        <div class="valor-item">
+          <div class="v-num">IV</div>
+          <h3>Permanencia</h3>
+          <p>Diseñamos para durar 30 años. Sin tendencias pasajeras, sin componentes descatalogables. Estructuras que
+            envejecen con elegancia.</p>
+        </div>
+      </div>
+
+      <!-- EQUIPO -->
+      <div class="equipo-section">
+        <div class="overline" style="color:var(--champagne);margin-bottom:1rem">⊹ Equipo</div>
+        <h2
+          style="font-family:&#39;Bodoni Moda&#39;,serif;font-size:clamp(2rem,4vw,3.5rem);font-weight:300;letter-spacing:-.02em">
+          Las personas <em style="color:var(--champagne);font-style:italic">detrás de cada pieza.</em></h2>
+        <div class="equipo-grid" id="equipo-grid">
+          <div class="miembro-card">
+            <div class="miembro-img">
+              <div
+                style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:var(--ink-3);font-family:&#39;Bodoni Moda&#39;,serif;font-style:italic;font-size:5rem;color:rgba(187,170,148,.3)">
+                R</div>
+            </div>
+            <div class="miembro-name">Rubén Delgado</div>
+            <div class="miembro-role overline">Director de Diseño</div>
+            <p class="miembro-bio">Arquitecto por la ETSAB. 18 años en Deley. Supervisa cada proyecto desde el briefing
+              hasta la llave en mano.</p>
+          </div>
+          <div class="miembro-card">
+            <div class="miembro-img">
+              <div
+                style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:var(--ink-3);font-family:&#39;Bodoni Moda&#39;,serif;font-style:italic;font-size:5rem;color:rgba(187,170,148,.3)">
+                I</div>
+            </div>
+            <div class="miembro-name">Isabel Moreno</div>
+            <div class="miembro-role overline">Directora de Producción</div>
+            <p class="miembro-bio">Ingeniera industrial. Responsable del centro de Alfaro y de los estándares de calidad
+              que definen la marca.</p>
+          </div>
+          <div class="miembro-card">
+            <div class="miembro-img">
+              <div
+                style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:var(--ink-3);font-family:&#39;Bodoni Moda&#39;,serif;font-style:italic;font-size:5rem;color:rgba(187,170,148,.3)">
+                P</div>
+            </div>
+            <div class="miembro-name">Pablo Sáenz</div>
+            <div class="miembro-role overline">Diseñador de Interiores</div>
+            <p class="miembro-bio">Interiorista con formación en Milán. Especializado en el desarrollo de colecciones de
+              cocina y baño de alta gama.</p>
+          </div>
+          <div class="miembro-card">
+            <div class="miembro-img">
+              <div
+                style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:var(--ink-3);font-family:&#39;Bodoni Moda&#39;,serif;font-style:italic;font-size:5rem;color:rgba(187,170,148,.3)">
+                C</div>
+            </div>
+            <div class="miembro-name">Carmen Ruiz</div>
+            <div class="miembro-role overline">Atención al Cliente</div>
+            <p class="miembro-bio">Gestora de proyectos. Punto de contacto único para cada cliente durante todo el
+              proceso, de principio a fin.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════ FOOTER (shared) ═══════════════════ -->
+  <footer>
+    <div class="container" style="padding:0">
+      <div class="footer-mark">DELEY</div>
+      <div class="footer-grid">
+        <div>
+          <h4>Estudio</h4>
+          <p>c/ Fitero, 1<br>26540 — Alfaro, La Rioja</p>
+        </div>
+        <div>
+          <h4>Contacto</h4>
+          <a href="mailto:estudio@deleymobiliario.es">estudio@deleymobiliario.es</a>
+          <a href="tel:+34941181985" style="color:var(--muted);font-size:.85rem">+34 941 181 985</a>
+        </div>
+        <div>
+          <h4>Síguenos</h4>
+          <a href="https://www.instagram.com/deleymobiliario/" target="_blank">Instagram ↗</a>
+          <a href="https://es.pinterest.com/Deleymobiliario/" target="_blank">Pinterest ↗</a>
+        </div>
+        <div>
+          <h4>Empresa</h4>
+          <button onclick="openNosotros()"
+            style="background:none;border:none;color:var(--bone);font-family:inherit;font-size:inherit;padding:0;display:block;margin-bottom:.4rem;transition:color .3s;text-align:left">Nosotros</button>
+          <button onclick="abrirLogin()"
+            style="background:none;border:none;border-bottom:1px solid var(--champagne);padding-bottom:2px;color:var(--bone);font-family:inherit;font-size:inherit;transition:color .3s">Acceso
+            Intranet</button>
+        </div>
+      </div>
+      <div class="copy">
+        <div>© 2026 Deley Mobiliario · Todos los derechos reservados</div>
+        <div>Diseñado y fabricado en Alfaro, La Rioja</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- LIGHTBOX -->
+  <div id="lightbox">
+    <button id="lightbox-close" onclick="closeLightbox()">✕</button>
+    <button id="lightbox-prev" onclick="lbNav(-1)">‹</button>
+    <img id="lightbox-img" src="file:///C:/Users/Ruben/Downloads/deley_v4_1.html" alt="">
+    <button id="lightbox-next" onclick="lbNav(1)">›</button>
+    <div id="lightbox-caption"></div>
+  </div>
+
+  <script>
+    /* ════════════════════════════════════════════
+       DATA
+    ════════════════════════════════════════════ */
+    const PORTALS = [
+      { id: 'colecciones', n: '01', title: 'Colecciones', sub: 'Cocinas · Baños · Armarios', img: '003 - CASA 3 COCINA.webp' },
+      { id: 'proyectos', n: '02', title: 'Proyectos', sub: 'Viviendas Unifamiliares', img: '001 - CASA 1 COCINA.webp' },
+      { id: 'id', n: '03', title: 'I+D Fabricación', sub: 'Centro de Producción', img: '002 - CASA 2 COCINA.webp' }
+    ];
+
+    const SUBPORTALS = {
+      colecciones: {
+        overline: '⊹ Colecciones', title: 'Tres disciplinas.', desc: 'Cada universo se piensa como una arquitectura interior independiente.',
+        items: [{ id: 'cocinas', title: 'Cocinas', img: '001 - CASA 1 COCINA.webp' }, { id: 'banos', title: 'Baños', img: '001 - CASA 1 BAÑO.webp' }, { id: 'armarios', title: 'Armarios', img: '001 - CASA 1 ARMARIO.webp' }]
+      },
+      proyectos: {
+        overline: '⊹ Proyectos', title: 'Obra construida.', desc: 'Residencias documentadas en detalle — del croquis al detalle constructivo.',
+        items: [{ id: 'proyectos', title: 'Viviendas Unifamiliares', img: '001 - CASA 1 COCINA.webp' }]
+      },
+      id: {
+        overline: '⊹ I+D Fabricación', title: 'El taller.', desc: '12.000m² donde cada pieza se concibe, mecaniza, laca e inspecciona.',
+        items: [{ id: 'id', title: 'Centro de Producción', img: '002 - CASA 2 COCINA.webp' }]
+      }
+    };
+
+    const COLLECTIONS = {
+      cocinas: {
+        title: 'Cocinas', overline: 'Colección — Cocinas',
+        intro: 'Arquitectura culinaria. Líneas tensas, materia honesta, sistemas que desaparecen al servicio del rito.',
+        items: [
+          { n: 'I', title: 'Pureza', desc: 'Sistemas sin tirador con terminaciones a 45º. Frente continuo en lacado mate.', img: '001 - CASA 1 COCINA.webp' },
+          { n: 'II', title: 'Estructura', desc: 'Mobiliario técnico de alta resistencia. Acero brillo y piedra Sahara Noir.', img: '002 - CASA 2 COCINA.webp' },
+          { n: 'III', title: 'Vanguardia', desc: 'Roble fumé en encadenamiento horizontal sobre base de mármol Calacatta.', img: '003 - CASA 3 COCINA.webp' },
+          { n: 'IV', title: 'Esencia', desc: 'Integración total con la arquitectura. Isla monolítica de 4,80m en travertino.', img: '004 - CASA 4 COCINA.webp' }]
+      },
+      banos: {
+        title: 'Baños', overline: 'Colección — Baños',
+        intro: 'Wellness arquitectónico. Volúmenes flotantes, drenajes ocultos, piedras templadas.',
+        items: [
+          { n: 'I', title: 'Wellness', desc: 'Mobiliario suspendido, drenaje oculto perimetral. Piedra natural y latón cepillado.', img: '001 - CASA 1 BAÑO.webp' },
+          { n: 'II', title: 'Templo', desc: 'Microcemento en continuidad. Bañera tallada en bloque único de piedra caliza.', img: '002 - CASA 2 BAÑO.webp' },
+          { n: 'III', title: 'Simetría', desc: 'Doble vanidad en nogal y mármol Verde Alpi. Espejos con perímetro de luz.', img: '003 - CASA 3 BAÑO.webp' },
+          { n: 'IV', title: 'Latón', desc: 'Detalles en latón envejecido. Grifería tallada a medida en piezas únicas.', img: '004 - CASA 4 BAÑO.webp' }]
+      },
+      armarios: {
+        title: 'Armarios', overline: 'Colección — Armarios',
+        intro: 'El orden como arquitectura íntima. Vestidores en piel, madera y luz indirecta.',
+        items: [
+          { n: 'I', title: 'Orden', desc: 'Interiores personalizados en piel cosida y roble natural. Sistemas Push & Pull.', img: '001 - CASA 1 ARMARIO.webp' },
+          { n: 'II', title: 'Gran Formato', desc: 'Puertas batientes de 3m con bisagras invisibles. Lacado mate negro carbón.', img: '002 - CASA 2 ARMARIO.webp' },
+          { n: 'III', title: 'Sensorial', desc: 'Iluminación LED indirecta sensorizada. Cajones forrados en alcántara.', img: '003 - CASA 3 ARMARIO.webp' },
+          { n: 'IV', title: 'Vestidor', desc: 'Sistema modular abierto. Estructura en aluminio anodizado bronce.', img: '004 - CASA 4 ARMARIO.webp' }]
+      },
+      proyectos: {
+        title: 'Viviendas Unifamiliares', overline: 'Proyectos — In situ',
+        intro: 'Cuatro residencias. Cuatro lecturas distintas del lujo doméstico contemporáneo.',
+        items: [
+          { n: 'I', title: 'Casa 1', desc: 'Vivienda unifamiliar. 620m². Roble local, piedra de Floresta, vidrio templado.', img: '001 - CASA 1 COCINA.webp' },
+          { n: 'II', title: 'Casa 2', desc: 'Costa Brava. 840m². Travertino romano, lacados perla y nogal americano.', img: '002 - CASA 2 COCINA.webp' },
+          { n: 'III', title: 'Casa 3', desc: 'Eixample, Barcelona. 320m². Reforma integral en edificio modernista.', img: '003 - CASA 3 COCINA.webp' },
+          { n: 'IV', title: 'Casa 4', desc: 'Pallars Sobirà. Restauración de masía del s.XVIII con interiores contemporáneos.', img: '004 - CASA 4 COCINA.webp' }]
+      },
+      id: {
+        title: 'Centro de Producción', overline: 'I+D — Fabricación',
+        intro: '12.000m² en Alfaro. CNC de 5 ejes, prensas hidráulicas, control humedad/temperatura.',
+        items: [
+          { n: 'I', title: 'Maquinaria CNC', desc: 'Mecanizado de precisión sub-milimétrica. Tolerancias de ±0,05mm en frentes.', img: '002 - CASA 2 COCINA.webp' },
+          { n: 'II', title: 'Lacados', desc: 'Cabina presurizada con filtración total. Acabados mate, satin y high-gloss.', img: '001 - CASA 1 COCINA.webp' },
+          { n: 'III', title: 'Maderas Nobles', desc: 'Stock seleccionado: roble europeo, nogal americano, fresno olivo, ébano.', img: '001 - CASA 1 ARMARIO.webp' },
+          { n: 'IV', title: 'Control de Calidad', desc: 'Cada pieza inspeccionada bajo luz neutra D65. Trazabilidad completa por proyecto.', img: '003 - CASA 3 COCINA.webp' }]
+      }
+    };
+
+    const PROJECT_DETAIL = {
+      'I': {
+        overline: 'Casa 1 — Vivienda Unifamiliar', title: 'Casa 1', heroImg: '001 - CASA 1 COCINA.webp',
+        descTitle: 'Una casa donde <em>cada material habla</em>.',
+        descBody: '<p>Situada en el norte de España, esta vivienda de 620m² fue concebida como una conversación entre la arquitectura de la tierra y la precisión industrial. La cocina, el elemento central, se diseñó como una isla monolítica en piedra de Floresta.</p><p>El vestidor principal, en roble natural y cuero cosido a mano, condensa en 28m² la filosofía del proyecto: lujo discreto, funcionalidad extrema.</p>',
+        specs: [{ k: 'Localización', v: 'Norte de España' }, { k: 'Superficie', v: '620 m²' }, { k: 'Año', v: '2023' }, { k: 'Materiales', v: 'Roble local · Piedra Floresta · Vidrio templado' }, { k: 'Espacios', v: 'Cocina · 3 Baños · Vestidor principal' }, { k: 'Instalación', v: '12 semanas' }],
+        strip: ['001 - CASA 1 COCINA.webp', '001 - CASA 1 BAÑO.webp', '001 - CASA 1 ARMARIO.webp']
+      },
+      'II': {
+        overline: 'Casa 2 — Costa Brava', title: 'Casa 2', heroImg: '002 - CASA 2 COCINA.webp',
+        descTitle: 'El Mediterráneo <em>filtrado por el detalle.</em>',
+        descBody: '<p>Una residencia de 840m² frente al mar. El encargo: que cada espacio hablara de Mediterráneo sin caer en el cliché. La solución: travertino romano en continuidad, lacados perla y la luz natural como material constructor.</p><p>La cocina de 18m² incorpora una isla de 5,2m en travertino veteado, con campana integrada en el techo y almacenamiento totalmente oculto.</p>',
+        specs: [{ k: 'Localización', v: 'Costa Brava, Girona' }, { k: 'Superficie', v: '840 m²' }, { k: 'Año', v: '2022' }, { k: 'Materiales', v: 'Travertino romano · Lacados perla · Nogal americano' }, { k: 'Espacios', v: 'Cocina · 4 Baños · 2 Vestidores' }, { k: 'Instalación', v: '16 semanas' }],
+        strip: ['002 - CASA 2 COCINA.webp', '002 - CASA 2 BAÑO.webp', '002 - CASA 2 ARMARIO.webp']
+      },
+      'III': {
+        overline: 'Casa 3 — Eixample', title: 'Casa 3', heroImg: '003 - CASA 3 COCINA.webp',
+        descTitle: 'Modernismo y <em>contemporaneidad.</em>',
+        descBody: '<p>Reforma integral de 320m² en un edificio modernista del Eixample barcelonés. El reto: conservar los techos de época y las molduras originales mientras se instalaba una cocina y tres baños de vocación absolutamente contemporánea.</p><p>La solución pasó por la creación de piezas de mobiliario exentas, que no toquen paredes ni techos, creando un diálogo respetuoso con la arquitectura preexistente.</p>',
+        specs: [{ k: 'Localización', v: 'Eixample, Barcelona' }, { k: 'Superficie', v: '320 m²' }, { k: 'Año', v: '2023' }, { k: 'Materiales', v: 'Roble fumé · Mármol Calacatta · Latón' }, { k: 'Espacios', v: 'Cocina · 3 Baños · Vestidor' }, { k: 'Instalación', v: '10 semanas' }],
+        strip: ['003 - CASA 3 COCINA.webp', '003 - CASA 3 BAÑO.webp', '003 - CASA 3 ARMARIO.webp']
+      },
+      'IV': {
+        overline: 'Casa 4 — Pallars Sobirà', title: 'Casa 4', heroImg: '004 - CASA 4 COCINA.webp',
+        descTitle: 'Masía del s.XVIII, <em>interiores de hoy.</em>',
+        descBody: '<p>Restauración de una masía del siglo XVIII en el Pallars Sobirà. Los muros de piedra de más de un metro de grosor impusieron las reglas. El mobiliario debía nacer desde la roca, no apoyarse en ella.</p><p>Cada pieza se fabricó a medida para adaptarse a los irregulares alzados de la construcción histórica, combinando madera de castaño recuperada del propio edificio con acabados contemporáneos en lacado mate antracita.</p>',
+        specs: [{ k: 'Localización', v: 'Pallars Sobirà, Lleida' }, { k: 'Superficie', v: '480 m²' }, { k: 'Año', v: '2024' }, { k: 'Materiales', v: 'Castaño recuperado · Lacado antracita · Piedra local' }, { k: 'Espacios', v: 'Cocina · 2 Baños · Vestidor' }, { k: 'Instalación', v: '20 semanas' }],
+        strip: ['004 - CASA 4 COCINA.webp', '004 - CASA 4 BAÑO.webp', '004 - CASA 4 ARMARIO.webp']
+      }
+    };
+
+    const PROCESO_DATA = [
+      { n: '01', title: 'Escucha', text: 'Primera reunión sin catálogos. Entendemos cómo vives, qué gestos realizas en la cocina, cómo te relacionas con el orden. El briefing no es un formulario, es una conversación.', tag: 'Semana 1–2' },
+      { n: '02', title: 'Diseño', text: '3D fotorrealista, planos técnicos y muestrario de materiales a escala. Hasta tres rondas de revisión sin coste. No pasamos a fabricación hasta que la aprobación sea unánime.', tag: 'Semana 3–6' },
+      { n: '03', title: 'Fabricación', text: 'Todo se produce en nuestro centro de Alfaro. CNC de 5 ejes, cabinas de lacado presurizado y carpintería artesanal bajo el mismo techo. Tolerancias de ±0,05mm.', tag: 'Semana 7–14' },
+      { n: '04', title: 'Entrega', text: 'Instaladores propios. Coordinación directa con arquitecto y obra. Entregamos con obra terminada, no dejamos materiales a pie de obra. Garantía de 10 años en estructura.', tag: 'Semana 15–18' }
+    ];
+
+    const TESTIMONIOS_DATA = [
+      { initial: 'L', name: 'Laura G.', project: 'Cocina — Casa 1', stars: 5, quote: 'Deley no vende cocinas, vende proyectos de vida. El nivel de escucha durante el proceso de diseño fue extraordinario. Sentí que el equipo entendía no solo lo que pedía, sino por qué lo pedía.' },
+      { initial: 'M', name: 'Marc T.', project: 'Reforma Integral — Eixample', stars: 5, quote: 'Después de tres presupuestos con otras empresas, Deley fue la única que llegó con un plano 3D detallado en la primera visita. La diferencia de rigor es abismal. Los plazos, cumplidos al día.' },
+      { initial: 'A', name: 'Ana & Jordi S.', project: 'Vivienda Completa — Costa Brava', stars: 5, quote: 'Trabajamos en arquitectura y somos muy exigentes. Deley fue la única empresa que hablaba nuestro idioma: tolerancias, acabados de obra, coordinación con instalaciones. Perfecto en todo.' }
+    ];
+
+    const VALORES_DATA = [
+      { n: 'I', title: 'Precisión', text: '±0,05mm de tolerancia en cada pieza mecanizada. No es marketing, es el estándar mínimo de nuestro control de calidad.' },
+      { n: 'II', title: 'Autoría', text: 'Cada proyecto lo firma un diseñador interno que lo acompaña de principio a fin. Sin traspasos, sin pérdidas de información.' },
+      { n: 'III', title: 'Materia', text: 'Seleccionamos personalmente los lotes de madera. Cada chapa tiene un origen documentado y un número de lote trazable.' },
+      { n: 'IV', title: 'Permanencia', text: 'Diseñamos para durar 30 años. Sin tendencias pasajeras, sin componentes descatalogables. Estructuras que envejecen con elegancia.' }
+    ];
+
+    const EQUIPO_DATA = [
+      { initial: 'R', name: 'Rubén Delgado', role: 'Director de Diseño', bio: 'Arquitecto por la ETSAB. 18 años en Deley. Supervisa cada proyecto desde el briefing hasta la llave en mano.' },
+      { initial: 'I', name: 'Isabel Moreno', role: 'Directora de Producción', bio: 'Ingeniera industrial. Responsable del centro de Alfaro y de los estándares de calidad que definen la marca.' },
+      { initial: 'P', name: 'Pablo Sáenz', role: 'Diseñador de Interiores', bio: 'Interiorista con formación en Milán. Especializado en el desarrollo de colecciones de cocina y baño de alta gama.' },
+      { initial: 'C', name: 'Carmen Ruiz', role: 'Atención al Cliente', bio: 'Gestora de proyectos. Punto de contacto único para cada cliente durante todo el proceso, de principio a fin.' }
+    ];
+
+    /* ════════════════════════════════════════════
+       LOADER — siempre muestra el hero de entrada
+    ════════════════════════════════════════════ */
+    // Garantizar que empezamos en el top y con page-home activa
+    window.scrollTo(0, 0);
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById('page-home').classList.add('active');
+
+    window.addEventListener('load', () => {
+      // Mínimo 2s para que se vea la animación del loader
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        document.body.classList.add('loaded');
+      }, 2000);
+    });
+
+    /* ════════════════════════════════════════════
+       SCROLL PROGRESS
+    ════════════════════════════════════════════ */
+    window.addEventListener('scroll', () => {
+      const sc = document.documentElement.scrollTop;
+      const sh = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      document.getElementById('scroll-bar').style.width = (sc / sh * 100) + '%';
+    }, { passive: true });
+
+    /* ════════════════════════════════════════════
+       CURSOR — sin lag: transform directo sin transition
+    ════════════════════════════════════════════ */
+    (() => {
+      if (!matchMedia('(pointer:fine)').matches) return;
+      const dot = document.getElementById('cursorDot');
+      const ring = document.getElementById('cursorRing');
+      let visible = false;
+      document.addEventListener('mousemove', e => {
+        const t = `translate3d(${e.clientX}px,${e.clientY}px,0) translate(-50%,-50%)`;
+        dot.style.transform = t;
+        ring.style.transform = t;
+        if (!visible) { visible = true; dot.classList.add('visible'); ring.classList.add('visible'); }
+      }, { passive: true });
+      document.addEventListener('mouseleave', () => {
+        dot.classList.remove('visible'); ring.classList.remove('visible'); visible = false;
+      });
+      document.addEventListener('mouseover', e => {
+        if (e.target.closest('a,button,input,textarea,select,label,[data-cursor]')) {
+          ring.classList.add('hover'); dot.classList.add('hide');
+        }
+      });
+      document.addEventListener('mouseout', e => {
+        if (e.target.closest('a,button,input,textarea,select,label,[data-cursor]')) {
+          ring.classList.remove('hover'); dot.classList.remove('hide');
+        }
+      });
+    })();
+
+    /* ════════════════════════════════════════════
+       NAV
+    ════════════════════════════════════════════ */
+    window.addEventListener('scroll', () => {
+      document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 40);
+    }, { passive: true });
+
+    /* ════════════════════════════════════════════
+       MOBILE MENU
+    ════════════════════════════════════════════ */
+    function toggleMobileMenu() {
+      const m = document.getElementById('mobile-menu');
+      const h = document.getElementById('hamburger');
+      m.classList.toggle('open'); h.classList.toggle('open');
+    }
+    function closeMobileMenu() {
+      document.getElementById('mobile-menu').classList.remove('open');
+      document.getElementById('hamburger').classList.remove('open');
+    }
+
+    /* ════════════════════════════════════════════
+       NAVIGATION
+    ════════════════════════════════════════════ */
+    let stack = ['home'];
+    function show(view) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      const pageMap = {
+        'home': 'page-home', 'nosotros': 'page-nosotros',
+        'project-detail': 'page-project-detail'
+      };
+      if (view in pageMap) document.getElementById(pageMap[view]).classList.add('active');
+      else if (view.startsWith('subportal:')) document.getElementById('page-subportal').classList.add('active');
+      else if (view.startsWith('gallery:')) document.getElementById('page-gallery').classList.add('active');
+      document.getElementById('back-btn').style.display = stack.length > 1 ? 'block' : 'none';
+      window.scrollTo(0, 0);
+      initScrollReveals();
+    }
+    function goHome() { stack = ['home']; show('home') }
+    function goBack() {
+      if (stack.length <= 1) return;
+      stack.pop();
+      const prev = stack[stack.length - 1];
+      if (prev === 'home') show('home');
+      else if (prev === 'nosotros') show('nosotros');
+      else if (prev.startsWith('subportal:')) renderSubportal(prev.split(':')[1]), show(prev);
+      else if (prev.startsWith('gallery:')) renderGallery(prev.split(':')[1]), show(prev);
+      else if (prev === 'project-detail') show('project-detail');
+    }
+    function goTo(view) {
+      stack.push(view);
+      if (view.startsWith('subportal:')) renderSubportal(view.split(':')[1]);
+      else if (view.startsWith('gallery:')) renderGallery(view.split(':')[1]);
+      show(view);
+    }
+    function openNosotros() { closeMobileMenu(); goTo('nosotros') }
+    function scrollToSection(id) {
+      if (stack[stack.length - 1] !== 'home') { goHome(); setTimeout(() => scrollToSection(id), 100); return }
+      const el = document.getElementById(id);
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    /* ════════════════════════════════════════════
+       RENDERERS
+    ════════════════════════════════════════════ */
+    function renderPortals() {
+      const c = document.getElementById('portal-list');
+      c.innerHTML = PORTALS.map(p => `
+    <button class="portal-row" onclick="goTo('subportal:${p.id}')">
+      <span class="num">— ${p.n}</span>
+      <div><h3>${p.title}</h3><div class="sub">${p.sub}</div></div>
+      <div class="preview" style="background-image:url('${p.img}')"></div>
+    </button>`).join('');
+    }
+    renderPortals();
+
+    function renderSubportal(cat) {
+      const data = SUBPORTALS[cat];
+      document.getElementById('sp-overline').textContent = data.overline;
+      const [first, ...rest] = data.title.split(' ');
+      document.getElementById('sp-title').innerHTML = `${first} <em style="color:var(--champagne);font-style:italic">${rest.join(' ')}</em>`;
+      document.getElementById('sp-desc').textContent = data.desc;
+      const grid = document.getElementById('sub-grid');
+      grid.style.gridTemplateColumns = `repeat(${Math.min(data.items.length, 3)},minmax(0,1fr))`;
+      grid.innerHTML = data.items.map(it => `
+    <button class="sub-card" onclick="goTo('gallery:${it.id}')">
+      <img src="${it.img}" alt="${it.title}">
+      <div class="overlay"></div>
+      <div class="label"><div class="ov overline">Explorar →</div><h3>${it.title}</h3></div>
+    </button>`).join('');
+    }
+
+    const observer = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target) } }), { threshold: .12 });
+
+    function renderGallery(id) {
+      const data = COLLECTIONS[id];
+      document.getElementById('g-overline').textContent = data.overline;
+      document.getElementById('g-title').innerHTML = data.title.split(' ').map((w, i) => i % 2 === 1 ? `<em style="color:var(--champagne)">${w}</em>` : w).join(' ');
+      document.getElementById('g-intro').textContent = data.intro;
+      const grid = document.getElementById('g-grid');
+      const layouts = [{ col: '1/span 7', aspect: '4/3', off: 0 }, { col: '9/span 4', aspect: '3/4', off: 60 }, { col: '1/span 5', aspect: '3/4', off: 0 }, { col: '7/span 6', aspect: '4/3', off: 80 }];
+      grid.innerHTML = data.items.map((it, i) => {
+        const L = layouts[i % 4];
+        return `<figure style="grid-column:${L.col};margin-top:${L.off}px">
+      <div class="img-wrap" style="aspect-ratio:${L.aspect}" onclick="openLightbox('${it.img}','${it.title}',${i},'${id}')">
+        <img src="${it.img}" alt="${it.title}"></div>
+      <figcaption class="caption"><span class="num">Nº ${it.n}</span>
+        <div><h3>${it.title}</h3><p>${it.desc}</p></div></figcaption>
+    </figure>`;
+      }).join('');
+      grid.querySelectorAll('figure').forEach(f => observer.observe(f));
+    }
+
+    /* ════════════════════════════════════════════
+       PROCESO
+    ════════════════════════════════════════════ */
+    function renderProceso() {
+      const grid = document.getElementById('proceso-grid');
+      grid.innerHTML = PROCESO_DATA.map(s => `
+    <div class="proceso-step">
+      <div class="step-n">${s.n}</div>
+      <h3>${s.title}</h3>
+      <p>${s.text}</p>
+      <span class="tag">${s.tag}</span>
+    </div>`).join('');
+      grid.querySelectorAll('.proceso-step').forEach(el => observer.observe(el));
+    }
+    renderProceso();
+
+    /* ════════════════════════════════════════════
+       TESTIMONIOS
+    ════════════════════════════════════════════ */
+    function renderTestimonios() {
+      document.getElementById('test-slider').innerHTML = TESTIMONIOS_DATA.map(t => `
+    <div class="test-card">
+      <div class="test-stars">${'<span>★</span>'.repeat(t.stars)}</div>
+      <blockquote>«${t.quote}»</blockquote>
+      <div class="test-client">
+        <div class="test-avatar">${t.initial}</div>
+        <div class="test-info"><div class="name">${t.name}</div><div class="project overline">${t.project}</div></div>
+      </div>
+    </div>`).join('');
+      document.querySelectorAll('.test-card').forEach(el => observer.observe(el));
+      document.getElementById('test-logos').innerHTML =
+        ['ARQO Studio', 'Habitat Interiors', 'Diseño Sur', 'Reformas Premium', 'Contratas Norte'].map(l => `<span>${l}</span>`).join('');
+    }
+    renderTestimonios();
+
+    /* ════════════════════════════════════════════
+       NOSOTROS
+    ════════════════════════════════════════════ */
+    function renderNosotros() {
+      document.getElementById('valores-grid').innerHTML = VALORES_DATA.map(v => `
+    <div class="valor-item">
+      <div class="v-num">${v.n}</div>
+      <h3>${v.title}</h3>
+      <p>${v.text}</p>
+    </div>`).join('');
+      document.getElementById('equipo-grid').innerHTML = EQUIPO_DATA.map(m => `
+    <div class="miembro-card">
+      <div class="miembro-img"><div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:var(--ink-3);font-family:'Bodoni Moda',serif;font-style:italic;font-size:5rem;color:rgba(187,170,148,.3)">${m.initial}</div></div>
+      <div class="miembro-name">${m.name}</div>
+      <div class="miembro-role overline">${m.role}</div>
+      <p class="miembro-bio">${m.bio}</p>
+    </div>`).join('');
+    }
+    renderNosotros();
+
+    /* ════════════════════════════════════════════
+       PROJECT DETAIL
+    ════════════════════════════════════════════ */
+    function openProjectDetail(num) {
+      const d = PROJECT_DETAIL[num];
+      if (!d) return;
+      document.getElementById('pd-hero-img').src = d.heroImg;
+      document.getElementById('pd-overline').textContent = d.overline;
+      document.getElementById('pd-title').textContent = d.title;
+      document.getElementById('pd-desc-title').innerHTML = d.descTitle;
+      document.getElementById('pd-desc-body').innerHTML = d.descBody;
+      document.getElementById('pd-specs').innerHTML = d.specs.map(s => `
+    <div class="spec-row"><span class="spec-k">${s.k}</span><span class="spec-v">${s.v}</span></div>`).join('');
+      document.getElementById('pd-strip').innerHTML = d.strip.map(img => `
+    <div class="strip-img"><img src="${img}" alt=""></div>`).join('');
+      goTo('project-detail');
+    }
+
+    /* ════════════════════════════════════════════
+       SCROLL REVEALS (generic)
+    ════════════════════════════════════════════ */
+    function initScrollReveals() {
+      document.querySelectorAll('.scroll-reveal:not(.visible)').forEach(el => observer.observe(el));
+    }
+    initScrollReveals();
+
+    /* ════════════════════════════════════════════
+       LIGHTBOX
+    ════════════════════════════════════════════ */
+    let lbImages = [], lbIndex = 0, lbCurrentId = '';
+    function openLightbox(img, caption, idx, collId) {
+      lbCurrentId = collId;
+      lbImages = COLLECTIONS[collId].items.map(it => ({ src: it.img, caption: it.title }));
+      lbIndex = idx;
+      updateLightbox();
+      document.getElementById('lightbox').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function updateLightbox() {
+      document.getElementById('lightbox-img').src = lbImages[lbIndex].src;
+      document.getElementById('lightbox-caption').textContent = `${lbIndex + 1} / ${lbImages.length} — ${lbImages[lbIndex].caption}`;
+    }
+    function lbNav(dir) {
+      lbIndex = (lbIndex + dir + lbImages.length) % lbImages.length;
+      document.getElementById('lightbox-img').style.opacity = 0;
+      setTimeout(() => { updateLightbox(); document.getElementById('lightbox-img').style.opacity = 1; }, 200);
+    }
+    function closeLightbox() {
+      document.getElementById('lightbox').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    document.addEventListener('keydown', e => {
+      if (!document.getElementById('lightbox').classList.contains('open')) return;
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowLeft') lbNav(-1);
+      if (e.key === 'ArrowRight') lbNav(1);
+    });
+
+    /* ════════════════════════════════════════════
+       CONTACT
+    ════════════════════════════════════════════ */
+    let selectedType = '';
+    document.getElementById('types').addEventListener('click', e => {
+      const b = e.target.closest('.type-btn'); if (!b) return;
+      document.querySelectorAll('.type-btn').forEach(x => x.classList.remove('active'));
+      b.classList.add('active'); selectedType = b.textContent.trim();
+    });
+    async function submitContact(e) {
+      e.preventDefault();
+      const f = e.target; const fb = document.getElementById('feedback');
+      const body = encodeURIComponent(`Nombre: ${f.name.value}\nEmail: ${f.email.value}\nTipo: ${selectedType}\n\n${f.message.value}`);
+      window.location.href = `mailto:info@deleymobiliario.es?subject=Briefing&body=${body}`;
+      fb.textContent = 'Abriendo correo electrónico…'; fb.className = 'feedback ok';
+    }
+
+    /* ════════════════════════════════════════════
+       ÁREA CLIENTES
+    ════════════════════════════════════════════ */
+    const usuariosPermitidos = {
+      "ruben@deleymobiliario.com": "DLY000-001",
+      "pedidos@deleymobiliario.com": "DLLY000-002"
+    };
+    function abrirLogin() {
+      const o = document.createElement('div');
+      o.id = "loginOverlay";
+      o.style = "position:fixed;inset:0;background:rgba(10,10,10,0.96);z-index:20000;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(12px);animation:fade .4s ease";
+      o.innerHTML = `
+    <div style="width:100%;max-width:420px;padding:3rem;border:1px solid var(--border);background:var(--ink)">
+      <div class="overline" style="color:var(--champagne);margin-bottom:2.5rem;text-align:center">⊹ Acceso Privado</div>
+      <h2 style="font-family:'Bodoni Moda',serif;color:var(--bone);margin-bottom:2rem;letter-spacing:.05em;font-weight:300;font-size:2rem;text-align:center">Área <em style="color:var(--champagne)">Clientes</em></h2>
+      <input type="email" id="loginEmail" placeholder="Email" class="lux-field" style="margin-bottom:1rem">
+      <input type="password" id="loginPass" placeholder="Contraseña" class="lux-field" style="margin-bottom:2rem">
+      <div style="display:flex;gap:1rem">
+        <button onclick="cerrarLogin()" class="btn-nav" style="flex:1">Cancelar</button>
+        <button onclick="validarAcceso()" class="submit" style="flex:1;margin-top:0">Entrar</button>
+      </div>
+      <p id="loginError" style="color:var(--oxblood);font-size:.7rem;margin-top:1.5rem;letter-spacing:.1em;display:none;text-align:center;text-transform:uppercase">Credenciales no válidas</p>
+    </div>`;
+      document.body.appendChild(o);
+    }
+    function cerrarLogin() { const el = document.getElementById('loginOverlay'); if (el) el.remove() }
+    function validarAcceso() {
+      const email = document.getElementById('loginEmail').value.trim();
+      const pass = document.getElementById('loginPass').value.trim();
+      const err = document.getElementById('loginError');
+      if (usuariosPermitidos[email] && usuariosPermitidos[email] === pass) {
+        window.location.href = "https://intranet.deleymobiliario.es/";
+      } else {
+        err.style.display = 'block';
+        document.getElementById('loginOverlay').children[0].animate([{ transform: 'translateX(-6px)' }, { transform: 'translateX(6px)' }], { duration: 80, iterations: 4 });
+      }
+    }
+  </script>
+
+
+</body>
+
+</html>
